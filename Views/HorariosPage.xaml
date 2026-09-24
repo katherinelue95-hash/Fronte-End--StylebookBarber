@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     HorariosPage — Selecciona Fecha y Hora (wireframe Stitch: dl1)
+     "Paso 3 de 4" · Calendario navegable por mes/año · Turnos Mañana/Tarde/Noche
+     Nota: Bindings runtime (sin x:DataType) -> plantillas anidadas.
+     ============================================================ -->
+<ContentPage x:Name="Root"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.HorariosPage"
+             Title="Horarios">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24" Spacing="20">
+
+                <!-- ===== Header marca ===== -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="StyleBook" FontFamily="BodoniModa" FontSize="20"
+                               FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                StrokeShape="RoundRectangle 6" Padding="8,3">
+                            <Label Text="BARBER" Style="{StaticResource LabelSM}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirNotificacionesCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Notifications}"
+                                   Style="{StaticResource IconGlyph}" FontSize="20"
+                                   TextColor="{StaticResource OnSurfaceVariant}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18"
+                                BackgroundColor="{StaticResource Primary}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirPerfilCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="18"
+                                   TextColor="{StaticResource OnPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- ===== Paso + título + chip mes dinámico ===== -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="4">
+                        <HorizontalStackLayout Spacing="6">
+                            <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                                     VerticalOptions="Center" />
+                            <Label Text="PASO 3 DE 4" Style="{StaticResource LabelGold}"
+                                   TextColor="{StaticResource Primary}" FontSize="10" />
+                        </HorizontalStackLayout>
+                        <Label Text="Selecciona Fecha y Hora" Style="{StaticResource HeadlineLGMobile}" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                            StrokeShape="RoundRectangle 10" Padding="10,8" VerticalOptions="Start">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{x:Static helpers:IconGlyphs.CalendarToday}"
+                                   Style="{StaticResource IconGlyph}" FontSize="16"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="{Binding ChipMes}" Style="{StaticResource LabelLG}"
+                                   TextColor="{StaticResource OnSurface}" FontSize="11" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- ===== Elige tu Barbero (chips con calificación) ===== -->
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{x:Static helpers:IconGlyphs.Verified}"
+                               Style="{StaticResource IconGlyph}" FontSize="15"
+                               TextColor="{StaticResource Primary}" />
+                        <Label Text="ELIGE TU BARBERO" Style="{StaticResource LabelSM}"
+                               TextColor="{StaticResource Outline}" FontSize="10"
+                               VerticalOptions="Center" />
+                        <Label Text="(toca una tarjeta)" Style="{StaticResource BodySM}"
+                               TextColor="{StaticResource OnSurfaceVariant}" FontSize="9"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="8"
+                                               BindableLayout.ItemsSource="{Binding Barberos}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BackgroundColor="{Binding Fondo}"
+                                            Stroke="{Binding BordeColor}" StrokeThickness="1.5"
+                                            StrokeShape="RoundRectangle 9999" Padding="14,8">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding BindingContext.ElegirBarberoCommand, Source={x:Reference Root}}"
+                                                CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="3">
+                                            <HorizontalStackLayout Spacing="5">
+                                                <Label Text="{Binding Nombre}" Style="{StaticResource LabelLG}"
+                                                       TextColor="{Binding TextoColor}" FontSize="12" />
+                                                <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                                       Style="{StaticResource IconGlyph}" FontSize="12"
+                                                       TextColor="{Binding TextoColor}" />
+                                                <Label Text="{Binding Rating}" FontFamily="PlusJakartaSans"
+                                                       FontSize="12" FontAttributes="Bold"
+                                                       TextColor="{Binding TextoColor}" />
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding Rank}" Style="{StaticResource LabelSM}"
+                                                   TextColor="{Binding TextoColor}" FontSize="8"
+                                                   Opacity="0.85" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+
+                <!-- ===== Tarjeta perfil del barbero ===== -->
+                <Border Style="{StaticResource CardLow}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="64,*,Auto" ColumnSpacing="12">
+                            <Border WidthRequest="64" HeightRequest="64"
+                                    StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                                    Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+<Grid>
+                        <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                               Style="{StaticResource IconGlyph}" FontSize="26"
+                               TextColor="{StaticResource Primary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border StrokeShape="RoundRectangle 9999" BackgroundColor="{StaticResource Primary}"
+                                WidthRequest="16" HeightRequest="16" Margin="0,0,0,0"
+                                HorizontalOptions="End" VerticalOptions="End" Padding="0,0,2,2">
+                            <Label Text="{x:Static helpers:IconGlyphs.Verified}"
+                                   Style="{StaticResource IconGlyph}" FontSize="9"
+                                   TextColor="{StaticResource OnPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding BarberoActivo.NombreCompleto}"
+                                           Style="{StaticResource HeadlineSM}" FontSize="18"
+                                           LineBreakMode="TailTruncation" />
+                                    <Border BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                                            StrokeShape="RoundRectangle 9999" Padding="8,2">
+                                        <Label Text="{Binding BarberoActivo.Rank}" Style="{StaticResource LabelSM}"
+                                               TextColor="{StaticResource Primary}" FontSize="8" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="1">
+                                    <HorizontalStackLayout Spacing="1"
+                                                           BindableLayout.ItemsSource="{Binding BarberoActivo.Estrellas}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                                       FontFamily="MaterialSymbolsOutlined" FontSize="13"
+                                                       TextColor="{Binding Color}" />
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </HorizontalStackLayout>
+                                    <Label Text="{Binding BarberoActivo.Rating}" Style="{StaticResource LabelLG}"
+                                           TextColor="{StaticResource Primary}" FontSize="11" Margin="4,0,0,0" />
+                                    <Label Text="·" TextColor="{StaticResource Outline}" FontSize="10"
+                                           VerticalOptions="Center" />
+                                    <Label Text="{Binding BarberoActivo.Duracion}" Style="{StaticResource BodySM}"
+                                           FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                                           Style="{StaticResource IconGlyph}" FontSize="13"
+                                           TextColor="{StaticResource Secondary}" />
+                                    <Label Text="{Binding BarberoActivo.Servicio}"
+                                           Style="{StaticResource BodySM}" FontSize="11"
+                                           LineBreakMode="TailTruncation" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2" Spacing="4">
+                                <Border WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16"
+                                        BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                                        HorizontalOptions="End">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleFavoritoCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Label Text="{Binding BarberoActivo.IconoFavorito}"
+                                           FontFamily="MaterialSymbolsOutlined" FontSize="16"
+                                           TextColor="{Binding BarberoActivo.FavoritoColor}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="FAVORITO" Style="{StaticResource LabelSM}"
+                                       TextColor="{Binding BarberoActivo.FavoritoColor}"
+                                       FontSize="7" HorizontalTextAlignment="End" />
+                                <Label Text="{Binding BarberoActivo.Precio}" Style="{StaticResource TitleMD}"
+                                       TextColor="{StaticResource Primary}" FontSize="18" HorizontalTextAlignment="End" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="#14FFFFFF" />
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Border BackgroundColor="{StaticResource SurfaceContainer}"
+                                    StrokeShape="RoundRectangle 10" Padding="10,6">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Schedule}"
+                                           Style="{StaticResource IconGlyph}" FontSize="14"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding BarberoActivo.Duracion}"
+                                           Style="{StaticResource LabelLG}" FontSize="10"
+                                           TextColor="{StaticResource OnSurface}" />
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Border BackgroundColor="{StaticResource SurfaceContainer}"
+                                    StrokeShape="RoundRectangle 10" Padding="10,6">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Chair}"
+                                           Style="{StaticResource IconGlyph}" FontSize="14"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="Sillón 1 y 2" Style="{StaticResource LabelLG}" FontSize="10"
+                                           TextColor="{StaticResource OnSurface}" />
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Label Text="{Binding BarberoActivo.Duracion}" Style="{StaticResource BodySM}"
+                                   FontSize="9" TextColor="{StaticResource Outline}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ===== Horarios del barbero ===== -->
+                <Border BackgroundColor="{StaticResource SurfaceContainerLow}"
+                        Stroke="{StaticResource OutlineVariant}" StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12" Padding="14">
+                    <VerticalStackLayout Spacing="6">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{x:Static helpers:IconGlyphs.Badge}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="HORARIOS BARBERO" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="10"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="{x:Static helpers:IconGlyphs.LightMode}"
+                                   Style="{StaticResource IconGlyph}" FontSize="15"
+                                   TextColor="#F5D77F" />
+                            <Label Text="Turno Mañana" Style="{StaticResource LabelLG}" FontSize="11" />
+                            <Label Text="10:00 AM — 01:00 PM" Style="{StaticResource BodySM}"
+                                   FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="{x:Static helpers:IconGlyphs.WbTwilight}"
+                                   Style="{StaticResource IconGlyph}" FontSize="15"
+                                   TextColor="#FDC659" />
+                            <Label Text="Turno Tarde" Style="{StaticResource LabelLG}" FontSize="11" />
+                            <Label Text="02:00 PM — 06:00 PM" Style="{StaticResource BodySM}"
+                                   FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="{x:Static helpers:IconGlyphs.NightsStay}"
+                                   Style="{StaticResource IconGlyph}" FontSize="15"
+                                   TextColor="#8FBCE6" />
+                            <Label Text="Turno Noche" Style="{StaticResource LabelLG}" FontSize="11" />
+                            <Label Text="06:00 PM — 09:00 PM" Style="{StaticResource BodySM}"
+                                   FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="6" Margin="0,2,0,0">
+                            <Label Text="{x:Static helpers:IconGlyphs.Chair}"
+                                   Style="{StaticResource IconGlyph}" FontSize="15"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="{Binding SillonesTexto}" Style="{StaticResource BodySM}"
+                                   FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ===== Calendario mensual navegable ===== -->
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{x:Static helpers:IconGlyphs.CalendarMonth}"
+                               Style="{StaticResource IconGlyph}" FontSize="17"
+                               TextColor="{StaticResource Primary}" />
+                        <Label Text="SELECCIONA EL DÍA" Style="{StaticResource LabelSM}"
+                               TextColor="{StaticResource Outline}" FontSize="10"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Navegación mes / año -->
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto" ColumnSpacing="10">
+                        <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AnioAnteriorCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.ArrowBack}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border Grid.Column="1" WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MesAnteriorCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.ChevronLeft}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="2" Spacing="0" VerticalOptions="Center">
+                            <Label Text="{Binding TituloMes}" Style="{StaticResource HeadlineSM}"
+                                   FontSize="16" HorizontalTextAlignment="Center" />
+                            <Label Text="‹ › mes · « » año" Style="{StaticResource BodySM}"
+                                   FontSize="8" TextColor="{StaticResource Outline}"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="3" WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MesSiguienteCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.ChevronRight}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border Grid.Column="4" WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AnioSiguienteCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.ArrowForward}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+
+                    <!-- encabezados de la semana -->
+                    <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                        <Label Text="LUN" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="1" Text="MAR" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="2" Text="MIÉ" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="3" Text="JUE" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="4" Text="VIE" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="5" Text="SÁB" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                        <Label Grid.Column="6" Text="DOM" Style="{StaticResource LabelSM}" FontSize="9"
+                               TextColor="{StaticResource Outline}" HorizontalTextAlignment="Center" />
+                    </Grid>
+
+                    <!-- cuadrícula 6 x 7 -->
+                    <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="Start"
+                                BindableLayout.ItemsSource="{Binding Mes}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border FlexLayout.Basis="14.28%" HeightRequest="46"
+                                        Margin="0,3"
+                                        StrokeShape="RoundRectangle 8"
+                                        Stroke="{Binding BordeColor}" StrokeThickness="1"
+                                        BackgroundColor="{Binding Fondo}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding BindingContext.ElegirDiaCommand, Source={x:Reference Root}}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="3"
+                                                         HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Text="{Binding Numero}" FontFamily="PlusJakartaSans"
+                                               FontSize="15" FontAttributes="Bold"
+                                               TextColor="{Binding TextoColor}"
+                                               IsVisible="{Binding Convertible}" />
+                                        <BoxView Color="{Binding PuntoColor}" CornerRadius="2.5"
+                                                 WidthRequest="5" HeightRequest="5"
+                                                 IsVisible="{Binding Convertible}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
+                <!-- ===== Turnos (Mañana / Tarde / Noche) ===== -->
+                <VerticalStackLayout Spacing="18"
+                                     BindableLayout.ItemsSource="{Binding Turnos}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="{Binding Icono}"
+                                               Style="{StaticResource IconGlyph}" FontSize="18"
+                                               TextColor="{Binding IconoColor}" />
+                                        <Label Text="{Binding Nombre}" Style="{StaticResource HeadlineSM}" FontSize="19" />
+                                    </HorizontalStackLayout>
+                                    <Label Grid.Column="1" Text="{Binding Rango}" Style="{StaticResource LabelSM}"
+                                           TextColor="{StaticResource Outline}" FontSize="8" VerticalOptions="Center" />
+                                </Grid>
+
+                                <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween"
+                                            BindableLayout.ItemsSource="{Binding Slots}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border FlexLayout.Basis="48.5%" Margin="0,4"
+                                                    BackgroundColor="{Binding Fondo}" Opacity="{Binding Opacidad}"
+                                                    StrokeShape="RoundRectangle 12" Padding="12">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding BindingContext.ElegirHoraCommand, Source={x:Reference Root}}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <VerticalStackLayout Spacing="4">
+                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                                        <Label Text="{Binding Hora}" FontFamily="PlusJakartaSans"
+                                                               FontSize="15" FontAttributes="Bold"
+                                                               TextColor="{Binding HoraColor}" />
+                                                        <Border Grid.Column="1" BackgroundColor="{Binding FondoEstado}"
+                                                                StrokeShape="RoundRectangle 9999" Padding="6,2">
+                                                            <Label Text="{Binding LabelEstado}"
+                                                                   Style="{StaticResource LabelSM}"
+                                                                   TextColor="{Binding TextoEstado}"
+                                                                   FontSize="8" />
+                                                        </Border>
+                                                    </Grid>
+                                                    <HorizontalStackLayout Spacing="4">
+                                                        <Label Text="{x:Static helpers:IconGlyphs.Lock}"
+                                                               Style="{StaticResource IconGlyph}" FontSize="12"
+                                                               TextColor="{StaticResource OnSurfaceVariant}"
+                                                               IsVisible="{Binding MostrarCandado}" />
+                                                        <Label Text="{Binding NotaIcono}"
+                                                               Style="{StaticResource IconGlyph}" FontSize="13"
+                                                               TextColor="{Binding NotaColor}"
+                                                               IsVisible="{Binding EsOptimo}" />
+                                                        <Label Text="{Binding Nota}" Style="{StaticResource BodySM}"
+                                                               FontSize="10" TextColor="{Binding NotaColor}"
+                                                               LineBreakMode="TailTruncation" />
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- ===== Comentarios / reseñas del barbero ===== -->
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{x:Static helpers:IconGlyphs.ChatBubble}"
+                                   Style="{StaticResource IconGlyph}" FontSize="16"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="COMENTARIOS DE CLIENTES" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="10"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Label Grid.Column="1" Text="{Binding BarberoActivo.Rating}" Style="{StaticResource LabelGold}"
+                               FontSize="10" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- ===== Escribir reseña: estrellas + comentario ===== -->
+                    <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                            Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 14" Padding="14">
+                        <VerticalStackLayout Spacing="10">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                       Style="{StaticResource IconGlyph}" FontSize="16"
+                                       TextColor="{StaticResource Primary}" />
+                                <Label Text="VALORA Y COMENTA A" Style="{StaticResource LabelSM}"
+                                       FontSize="10" TextColor="{StaticResource Outline}"
+                                       VerticalOptions="Center" />
+                                <Label Text="{Binding BarberoActivo.NombreCompleto}"
+                                       Style="{StaticResource LabelGold}" FontSize="11"
+                                       VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                            </HorizontalStackLayout>
+
+                            <!-- selector de estrellas (puntuación) -->
+                            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center"
+                                                   BindableLayout.ItemsSource="{Binding EstrellasPuntaje}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 19"
+                                                BackgroundColor="{StaticResource SurfaceContainerLowest}"
+                                                Stroke="{StaticResource GoldStrokeSoft}" StrokeThickness="1">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding BindingContext.PuntuarEstrellasCommand, Source={x:Reference Root}}"
+                                                    CommandParameter="{Binding Valor}" />
+                                            </Border.GestureRecognizers>
+                                            <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                                   FontFamily="MaterialSymbolsOutlined" FontSize="20"
+                                                   TextColor="{Binding Color}"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
+                            <Label Text="Toca las estrellas para calificar al barbero"
+                                   Style="{StaticResource BodySM}" FontSize="9" TextColor="{StaticResource Outline}"
+                                   HorizontalTextAlignment="Center" />
+
+                            <!-- caja de comentario -->
+                            <Border BackgroundColor="{StaticResource SurfaceContainer}"
+                                    StrokeShape="RoundRectangle 12" Padding="10">
+                                <Entry Text="{Binding ComentarioNuevo}"
+                                       Placeholder="Comparte tu experiencia con este barbero..."
+                                       PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                                       TextColor="{StaticResource OnSurface}"
+                                       BackgroundColor="Transparent"
+                                       FontFamily="PlusJakartaSans" FontSize="13" HeightRequest="44"
+                                       ReturnType="Done" />
+                            </Border>
+
+                            <Button Text="PUBLICAR RESEÑA"
+                                    Style="{StaticResource GoldButton}" HeightRequest="44" FontSize="12"
+                                    Command="{Binding EnviarComentarioCommand}" />
+
+                            <Label Text="{Binding MensajeResena}" Style="{StaticResource LabelBodyGold}"
+                                   FontSize="10" HorizontalTextAlignment="Center"
+                                   IsVisible="{Binding MensajeResena, Converter={StaticResource IsNotEmptyConverter}}" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <VerticalStackLayout Spacing="10"
+                                         BindableLayout.ItemsSource="{Binding BarberoActivo.Comentarios}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="{StaticResource SurfaceContainerLow}"
+                                        Stroke="{StaticResource OutlineVariant}" StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 12" Padding="12">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Border WidthRequest="30" HeightRequest="30" StrokeShape="RoundRectangle 15"
+                                                BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                                                Stroke="{StaticResource GoldStrokeSoft}" StrokeThickness="1">
+                                            <Label Text="{Binding Inicial}" FontFamily="PlusJakartaSans"
+                                                   FontSize="12" FontAttributes="Bold"
+                                                   TextColor="{StaticResource Primary}"
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label Text="{Binding Autor}" Style="{StaticResource LabelLG}"
+                                                       FontSize="11" />
+                                                <HorizontalStackLayout Spacing="1">
+                                                    <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                                           FontFamily="MaterialSymbolsOutlined" FontSize="11"
+                                                           TextColor="{StaticResource Primary}" />
+                                                    <Label Text="{Binding Calificacion}" Style="{StaticResource LabelSM}"
+                                                           FontSize="9" TextColor="{StaticResource Primary}"
+                                                           VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                                <Label Text="·" TextColor="{StaticResource Outline}" FontSize="10"
+                                                       VerticalOptions="Center" />
+                                                <Label Text="{Binding Fecha}" Style="{StaticResource BodySM}"
+                                                       FontSize="9" TextColor="{StaticResource Outline}"
+                                                       VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding Texto}" Style="{StaticResource BodySM}"
+                                                   FontSize="11" TextColor="{StaticResource OnSurfaceVariant}"
+                                                   LineBreakMode="WordWrap" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== Resumen de reserva + continuar ===== -->
+        <Border Grid.Row="1" Style="{StaticResource CardLow}" Padding="14,12" Margin="20,0,20,12">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                        BackgroundColor="{StaticResource SurfaceContainerHighest}">
+                    <Label Text="{x:Static helpers:IconGlyphs.EventAvailable}"
+                           Style="{StaticResource IconGlyph}" FontSize="20"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                    <Label Text="{Binding ResumenReserva}" Style="{StaticResource TitleMD}"
+                           FontSize="14" LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding ResumenDetalles}" Style="{StaticResource BodySM}"
+                           FontSize="10" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+                <Button Grid.Column="2" Text="Continuar Reserva"
+                        Style="{StaticResource GoldButton}" HeightRequest="46" FontSize="11"
+                        Command="{Binding ContinuarReservaCommand}" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

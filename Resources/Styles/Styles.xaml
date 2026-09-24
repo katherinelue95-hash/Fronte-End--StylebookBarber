@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ============================================================
+     StyleBook Barber — Estilos Atelier Noir
+     Tipografía: Bodoni Moda (display/headlines) · Plus Jakarta Sans (UI)
+     ============================================================ -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ============ Tipografía ============ -->
+    <Style x:Key="DisplayHero" TargetType="Label">
+        <Setter Property="FontFamily" Value="BodoniModa" />
+        <Setter Property="FontSize" Value="48" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="LineHeight" Value="1.1" />
+        <Setter Property="CharacterSpacing" Value="0" />
+    </Style>
+
+    <Style x:Key="HeadlineLG" TargetType="Label">
+        <Setter Property="FontFamily" Value="BodoniModa" />
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="HeadlineLGMobile" TargetType="Label">
+        <Setter Property="FontFamily" Value="BodoniModa" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="HeadlineMD" TargetType="Label">
+        <Setter Property="FontFamily" Value="BodoniModa" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="HeadlineSM" TargetType="Label">
+        <Setter Property="FontFamily" Value="BodoniModa" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="TitleMD" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="BodyLG" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="BodyMD" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="BodySM" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+    </Style>
+
+    <Style x:Key="LabelLG" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="CharacterSpacing" Value="1.4" />
+    </Style>
+
+    <Style x:Key="LabelSM" TargetType="Label">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Outline}" />
+        <Setter Property="CharacterSpacing" Value="1.6" />
+    </Style>
+
+    <!-- Variantes tipográficas doradas y secundarias -->
+    <Style x:Key="LabelGold" TargetType="Label" BasedOn="{StaticResource LabelLG}">
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <Style x:Key="LabelBodyGold" TargetType="Label" BasedOn="{StaticResource BodyMD}">
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <Style x:Key="HeadlineGold" TargetType="Label" BasedOn="{StaticResource HeadlineSM}">
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <!-- ============ Botones ============ -->
+    <!-- CTA Dorado Primario (gradiente #F5D77F → #D4AF37 → #AA7C11) -->
+    <Style x:Key="GoldButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource GoldGradient}" />
+        <Setter Property="TextColor" Value="{StaticResource OnPrimary}" />
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="CharacterSpacing" Value="1.4" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#4CD4AF37" Radius="18" Opacity="0.35" Offset="0,6" />
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.45" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="0.98" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Botón fantasma de vidrio (secondary glass) -->
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassLight}" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="9999" />
+        <Setter Property="BorderColor" Value="{StaticResource GoldStrokeStrong}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#1AD4AF37" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ============ Tarjetas ============ -->
+    <!-- Card base: #1E1E1E, marco dorado sutil -->
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#1E1E1E" />
+        <Setter Property="Stroke" Value="{StaticResource GoldStroke}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black" Radius="24" Opacity="0.45" Offset="0,10" />
+        </Setter>
+    </Style>
+
+    <!-- Card baja (retazos / contenedores) -->
+    <Style x:Key="CardLow" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceContainerLow}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black" Radius="16" Opacity="0.3" Offset="0,6" />
+        </Setter>
+    </Style>
+
+    <!-- Card con borde dorado intenso (cita próxima) -->
+    <Style x:Key="CardGold" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#1E1E1E" />
+        <Setter Property="Stroke" Value="{StaticResource GoldStrokeStrong}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#59D4AF37" Radius="28" Opacity="0.30" Offset="0,12" />
+        </Setter>
+    </Style>
+
+    <!-- ============ Inputs ============ -->
+    <!-- Campo de texto sobre vidrio oscuro -->
+    <Style x:Key="EntryDark" TargetType="Entry">
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Outline}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="ClearButtonVisibility" Value="Never" />
+    </Style>
+
+    <!-- Contenedor de campo (vidrio ahumado 52px, radio 14) -->
+    <Style x:Key="InputContainer" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceContainer}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black" Radius="8" Opacity="0.25" Offset="0,2" />
+        </Setter>
+    </Style>
+
+    <!-- Pestaña del selector de rol (segmentado) -->
+    <Style x:Key="SegmentTabActive" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceContainerHigh}" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryBright}" />
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <Style x:Key="SegmentTabInactive" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+        <Setter Property="FontFamily" Value="PlusJakartaSans" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <!-- Contenedor del segmentado -->
+    <Style x:Key="SegmentContainer" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceContainerLow}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Padding" Value="4" />
+    </Style>
+
+    <!-- ============ Página base (fondo oscuro) ============ -->
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="Shell.NavBarIsVisible" Value="True" />
+    </Style>
+
+    <!-- Icono Material Symbols -->
+    <Style x:Key="IconGlyph" TargetType="Label">
+        <Setter Property="FontFamily" Value="MaterialSymbolsOutlined" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+
+    <!-- Bit de notificación (punto dorado) -->
+    <Style x:Key="StatusDot" TargetType="BoxView">
+        <Setter Property="Color" Value="{StaticResource Primary}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+    </Style>
+</ResourceDictionary>

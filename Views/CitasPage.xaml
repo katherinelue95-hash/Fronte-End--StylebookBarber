@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     CitasPage — Mis Citas: próxima cita + historial
+     MVVM: CitasViewModel
+     ============================================================ -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:m="clr-namespace:StyleBookBarberApp.Models"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.CitasPage"
+             x:DataType="vm:CitasViewModel"
+             Title="Citas"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24" Spacing="18">
+
+                <!-- ===== Header marca ===== -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="StyleBook" FontFamily="BodoniModa" FontSize="20"
+                               FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                StrokeShape="RoundRectangle 6" Padding="8,3">
+                            <Label Text="BARBER" Style="{StaticResource LabelSM}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirNotificacionesCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Notifications}"
+                                   Style="{StaticResource IconGlyph}" FontSize="20"
+                                   TextColor="{StaticResource OnSurfaceVariant}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18"
+                                BackgroundColor="{StaticResource Primary}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirPerfilCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="18"
+                                   TextColor="{StaticResource OnPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- ===== Título ===== -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="4">
+                        <HorizontalStackLayout Spacing="6">
+                            <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                                     VerticalOptions="Center" />
+                            <Label Text="MIS CITAS" Style="{StaticResource LabelGold}"
+                                   TextColor="{StaticResource Primary}" FontSize="10" />
+                        </HorizontalStackLayout>
+                        <Label Text="Historial de Citas" Style="{StaticResource HeadlineLGMobile}" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                            StrokeShape="RoundRectangle 9999" Padding="10,5" VerticalOptions="Start">
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="{x:Static helpers:IconGlyphs.CalendarMonth}"
+                                   Style="{StaticResource IconGlyph}" FontSize="14"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="{Binding HistorialResumen}" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Primary}" FontSize="9" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- ===== Próxima cita (tarjeta dorada) ===== -->
+                <Border Style="{StaticResource CardGold}">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                <BoxView Style="{StaticResource StatusDot}" VerticalOptions="Center" />
+                                <Label Text="PRÓXIMA CITA" Style="{StaticResource LabelGold}"
+                                       TextColor="{StaticResource Primary}" FontSize="10" />
+                            </HorizontalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="#26D4AF37"
+                                    StrokeShape="RoundRectangle 9999" Padding="10,4">
+                                <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Verified}"
+                                           Style="{StaticResource IconGlyph}" FontSize="13"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="CONFIRMADA" Style="{StaticResource LabelSM}"
+                                           TextColor="{StaticResource Primary}" FontSize="9" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="64,*" ColumnSpacing="12">
+                            <Border WidthRequest="64" HeightRequest="64"
+                                    StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                                    Stroke="{StaticResource GoldStroke}" StrokeThickness="1">
+                                <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                                       Style="{StaticResource IconGlyph}" FontSize="28"
+                                       TextColor="{StaticResource Primary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="{Binding ProximaServicio}" Style="{StaticResource HeadlineSM}"
+                                       LineBreakMode="TailTruncation" />
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Face}"
+                                           Style="{StaticResource IconGlyph}" FontSize="15"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding ProximaBarbero}" Style="{StaticResource BodyMD}"
+                                           LineBreakMode="TailTruncation" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="{x:Static helpers:IconGlyphs.CalendarToday}"
+                                           Style="{StaticResource IconGlyph}" FontSize="14"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding ProximaFecha}" Style="{StaticResource BodySM}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Border BackgroundColor="#D90E0E0E"
+                                StrokeShape="RoundRectangle 12" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <HorizontalStackLayout Spacing="12">
+                                    <Border WidthRequest="40" HeightRequest="40"
+                                            StrokeShape="RoundRectangle 10"
+                                            BackgroundColor="{StaticResource SurfaceContainer}">
+                                        <Label Text="{x:Static helpers:IconGlyphs.EventAvailable}"
+                                               Style="{StaticResource IconGlyph}" FontSize="20"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                        <Label Text="Total a pagar en barbería" Style="{StaticResource BodySM}"
+                                               TextColor="{StaticResource OnSurfaceVariant}" FontSize="11" />
+                                        <Label Text="{Binding ProximaPrecio}" Style="{StaticResource TitleMD}"
+                                               TextColor="{StaticResource Primary}" FontSize="20" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <Border Grid.Column="1" WidthRequest="36" HeightRequest="36"
+                                        StrokeShape="RoundRectangle 18"
+                                        BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding VerDetalleCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Label Text="{x:Static helpers:IconGlyphs.Info}"
+                                           Style="{StaticResource IconGlyph}" FontSize="17"
+                                           TextColor="{StaticResource OnSurfaceVariant}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ===== Historial ===== -->
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="{x:Static helpers:IconGlyphs.History}"
+                           Style="{StaticResource IconGlyph}" FontSize="17"
+                           TextColor="{StaticResource Primary}" />
+                    <Label Text="HISTORIAL" Style="{StaticResource LabelSM}"
+                           TextColor="{StaticResource Outline}" FontSize="10"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout Spacing="12"
+                                     BindableLayout.ItemsSource="{Binding Historial}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:RegistroCita">
+                            <Border Style="{StaticResource CardLow}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Servicio}" Style="{StaticResource TitleMD}"
+                                               FontSize="14" LineBreakMode="TailTruncation" />
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="{x:Static helpers:IconGlyphs.Face}"
+                                                   Style="{StaticResource IconGlyph}" FontSize="13"
+                                                   TextColor="{StaticResource Primary}" />
+                                            <Label Text="{Binding Barbero}" Style="{StaticResource BodySM}"
+                                                   FontSize="10" TextColor="{StaticResource OnSurfaceVariant}"
+                                                   LineBreakMode="TailTruncation" />
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding Fecha}" Style="{StaticResource BodySM}"
+                                               FontSize="10" TextColor="{StaticResource OnSurfaceVariant}" />
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6" HorizontalOptions="End">
+                                        <Border BackgroundColor="{Binding FondoEstado}"
+                                                StrokeShape="RoundRectangle 9999" Padding="8,3">
+                                            <HorizontalStackLayout Spacing="4">
+                                                <Label Text="{Binding EstadoIcono}"
+                                                       Style="{StaticResource IconGlyph}" FontSize="10"
+                                                       TextColor="{Binding TextoEstado}" />
+                                                <Label Text="{Binding Estado}" Style="{StaticResource LabelSM}"
+                                                       TextColor="{Binding TextoEstado}" FontSize="8" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                        <Label Text="{Binding Precio}" Style="{StaticResource TitleMD}"
+                                               FontSize="14" TextColor="{StaticResource Primary}"
+                                               HorizontalOptions="End" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== Agendar nueva cita ===== -->
+        <Border Grid.Row="1" Style="{StaticResource CardLow}" Padding="14,12" Margin="20,0,20,12">
+            <Button Text="Agendar Nueva Cita"
+                    Style="{StaticResource GoldButton}" HeightRequest="46" FontSize="13"
+                    Command="{Binding AgendarCommand}" />
+        </Border>
+    </Grid>
+</ContentPage>

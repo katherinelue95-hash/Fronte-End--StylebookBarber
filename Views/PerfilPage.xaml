@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     PerfilPage — datos del usuario, foto (galería) y cerrar sesión
+     MVVM: PerfilViewModel
+     ============================================================ -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.PerfilPage"
+             x:DataType="vm:PerfilViewModel"
+             Title="Perfil">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,8,20,32" Spacing="24">
+
+            <!-- ===== Encabezado ===== -->
+            <HorizontalStackLayout Spacing="8">
+                <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                         VerticalOptions="Center" />
+                <Label Text="PERFIL" Style="{StaticResource LabelGold}"
+                       TextColor="{StaticResource Primary}" FontSize="10" />
+            </HorizontalStackLayout>
+            <Label Text="Tu Espacio" Style="{StaticResource HeadlineLGMobile}" />
+            <Label Text="Administra tu cuenta, tu foto y tu sesión."
+                   Style="{StaticResource BodyMD}" TextColor="{StaticResource OnSurfaceVariant}" />
+
+            <!-- ===== Avatar + foto ===== -->
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Grid WidthRequest="104" HeightRequest="104">
+                    <Border StrokeShape="RoundRectangle 52"
+                            BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                            WidthRequest="104" HeightRequest="104"
+                            Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="1.5">
+                        <Grid>
+                            <!-- Imagen cargada desde galería -->
+                            <Image Source="{Binding FotoPath}" Aspect="AspectFill"
+                                   IsVisible="{Binding HayFoto}" />
+                            <!-- Icono por defecto -->
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="46"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center"
+                                   IsVisible="{Binding SinFoto}" />
+                        </Grid>
+                    </Border>
+                    <!-- botón añadir foto -->
+                    <Border WidthRequest="34" HeightRequest="34" StrokeShape="RoundRectangle 17"
+                            BackgroundColor="{StaticResource Primary}"
+                            Stroke="{StaticResource OnSurface}" StrokeThickness="2"
+                            HorizontalOptions="End" VerticalOptions="End">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ElegirFotoCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static helpers:IconGlyphs.AddPhotoAlternate}"
+                               Style="{StaticResource IconGlyph}" FontSize="16"
+                               TextColor="{StaticResource OnPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+                <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                        StrokeShape="RoundRectangle 9999" Padding="14,6">
+                    <Label Text="{Binding RolEtiqueta}" Style="{StaticResource LabelSM}"
+                           TextColor="{StaticResource Primary}" FontSize="9" />
+                </Border>
+                <Label Text="Toca el ícono dorado para agregar tu foto desde la galería."
+                       Style="{StaticResource BodySM}" FontSize="10"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- ===== Datos de cuenta ===== -->
+            <Border Style="{StaticResource CardLow}" Padding="18">
+                <VerticalStackLayout Spacing="16">
+                    <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="19"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="NOMBRE" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="9" />
+                            <Label Text="{Binding Nombre}" Style="{StaticResource TitleMD}"
+                                   FontSize="15" LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource OutlineVariant}" />
+                    <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Label Text="{x:Static helpers:IconGlyphs.Email}"
+                                   Style="{StaticResource IconGlyph}" FontSize="19"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="CORREO" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="9" />
+                            <Label Text="{Binding Correo}" Style="{StaticResource TitleMD}"
+                                   FontSize="15" LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{StaticResource OutlineVariant}" />
+                    <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Label Text="{x:Static helpers:IconGlyphs.Key}"
+                                   Style="{StaticResource IconGlyph}" FontSize="19"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                            <Label Text="ROL DE ACCESO" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="9" />
+                            <Label Text="{Binding Rol}" Style="{StaticResource TitleMD}"
+                                   FontSize="15" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ===== Cerrar sesión ===== -->
+            <Button Text="Cerrar Sesión"
+                    Command="{Binding CerrarSesionCommand}"
+                    HeightRequest="48"
+                    BackgroundColor="{StaticResource SurfaceContainerLow}"
+                    BorderColor="{StaticResource GoldStrokeStrong}"
+                    BorderWidth="1"
+                    CornerRadius="12"
+                    TextColor="{StaticResource OnSurfaceVariant}"
+                    FontFamily="PlusJakartaSans" FontSize="13" FontAttributes="Bold" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

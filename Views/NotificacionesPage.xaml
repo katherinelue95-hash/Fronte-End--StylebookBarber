@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     NotificacionesPage — centro de notificaciones del usuario
+     MVVM: NotificacionesViewModel (ícono campana de los headers)
+     ============================================================ -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:m="clr-namespace:StyleBookBarberApp.Models"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.NotificacionesPage"
+             x:DataType="vm:NotificacionesViewModel"
+             Title="Notificaciones">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,8,20,32" Spacing="16">
+
+            <!-- ===== Encabezado ===== -->
+            <HorizontalStackLayout Spacing="8">
+                <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                         VerticalOptions="Center" />
+                <Label Text="NOTIFICACIONES" Style="{StaticResource LabelGold}"
+                       TextColor="{StaticResource Primary}" FontSize="10" />
+            </HorizontalStackLayout>
+            <Label Text="Centro de Notificaciones" Style="{StaticResource HeadlineLGMobile}" />
+            <Label Text="Enterate de tus citas, recordatorios y novedades."
+                   Style="{StaticResource BodyMD}" TextColor="{StaticResource OnSurfaceVariant}" />
+
+            <!-- ===== Lista de notificaciones ===== -->
+            <VerticalStackLayout Spacing="12"
+                                 BindableLayout.ItemsSource="{Binding Notificaciones}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="m:NotificacionItem">
+                        <Border Style="{StaticResource CardLow}" Padding="14">
+                            <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="12">
+                                <Border WidthRequest="44" HeightRequest="44"
+                                        StrokeShape="RoundRectangle 12"
+                                        BackgroundColor="{Binding FondoIcono}">
+                                    <Label Text="{Binding Icono}"
+                                           Style="{StaticResource IconGlyph}" FontSize="20"
+                                           TextColor="{Binding ColorIcono}"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label Text="{Binding Titulo}" Style="{StaticResource TitleMD}"
+                                               FontSize="14" LineBreakMode="TailTruncation" />
+                                        <BoxView WidthRequest="7" HeightRequest="7" CornerRadius="3.5"
+                                                 Color="{StaticResource Primary}"
+                                                 VerticalOptions="Center"
+                                                 IsVisible="{Binding EsNueva}" />
+                                    </HorizontalStackLayout>
+                                    <Label Text="{Binding Cuerpo}" Style="{StaticResource BodySM}"
+                                           FontSize="11" TextColor="{StaticResource OnSurfaceVariant}"
+                                           LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="{Binding Hora}" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource Outline}" FontSize="9"
+                                       VerticalOptions="Start" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

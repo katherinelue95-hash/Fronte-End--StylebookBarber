@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     LoginPage — wireframe Stitch (zip7) · Atelier Noir
+     MVVM: LoginViewModel
+     ============================================================ -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="Iniciar Sesión"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,24,20,40" Spacing="20">
+
+            <!-- ===== Isotipo + Marca (glow ambiental) ===== -->
+            <VerticalStackLayout Spacing="10" Margin="0,8,0,4">
+                <Border WidthRequest="64" HeightRequest="64"
+                        StrokeShape="RoundRectangle 32"
+                        BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                        Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="1"
+                        HorizontalOptions="Center">
+                    <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                           Style="{StaticResource IconGlyph}"
+                           FontSize="30"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="STYLEBOOK BARBER"
+                       Style="{StaticResource LabelGold}"
+                       FontSize="18" CharacterSpacing="2.5"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="HAUTE GROOMING CLUB"
+                       Style="{StaticResource LabelSM}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- ===== Encabezado de sesión ===== -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                <Label Text="Iniciar Sesión" Style="{StaticResource HeadlineLGMobile}"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="Ingresa a tu cuenta de StyleBook"
+                       Style="{StaticResource BodyMD}"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- ===== Selector de rol (Cliente / Barbero / Administrativo) ===== -->
+            <Border Style="{StaticResource SegmentContainer}">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
+                    <Border Grid.Column="0" BackgroundColor="{Binding ClienteBgColor}"
+                            StrokeShape="RoundRectangle 10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectClienteCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="44">
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}"
+                                   TextColor="{Binding ClienteTextColor}" FontSize="17" />
+                            <Label Text="CLIENTE" Style="{StaticResource LabelLG}"
+                                   TextColor="{Binding ClienteTextColor}"
+                                   FontSize="12" CharacterSpacing="1.2"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" BackgroundColor="{Binding BarberoBgColor}"
+                            StrokeShape="RoundRectangle 10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectBarberoCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="44">
+                            <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                                   Style="{StaticResource IconGlyph}"
+                                   TextColor="{Binding BarberoTextColor}" FontSize="17" />
+                            <Label Text="BARBERO" Style="{StaticResource LabelLG}"
+                                   TextColor="{Binding BarberoTextColor}"
+                                   FontSize="12" CharacterSpacing="1.2"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" BackgroundColor="{Binding AdminBgColor}"
+                            StrokeShape="RoundRectangle 10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectAdminCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="44">
+                            <Label Text="{x:Static helpers:IconGlyphs.Badge}"
+                                   Style="{StaticResource IconGlyph}"
+                                   TextColor="{Binding AdminTextColor}" FontSize="17" />
+                            <Label Text="ADMIN" Style="{StaticResource LabelLG}"
+                                   TextColor="{Binding AdminTextColor}"
+                                   FontSize="12" CharacterSpacing="1.2"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ===== Campo correo electrónico ===== -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="CORREO ELECTRÓNICO" Style="{StaticResource LabelLG}"
+                       TextColor="{StaticResource OnSurfaceVariant}" FontSize="11" />
+                <Border Style="{StaticResource InputContainer}">
+                    <Grid ColumnDefinitions="36,*" ColumnSpacing="6">
+                        <Label Text="{x:Static helpers:IconGlyphs.AlternateEmail}"
+                               Style="{StaticResource IconGlyph}"
+                               TextColor="{StaticResource Outline}" FontSize="20"
+                               VerticalOptions="Center" HorizontalOptions="Center" />
+                        <Entry Grid.Column="1"
+                               Style="{StaticResource EntryDark}"
+                               Placeholder="ejemplo@correo.com"
+                               Keyboard="Email"
+                               Text="{Binding Email}"
+                               ReturnType="Next"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ===== Campo contraseña ===== -->
+            <VerticalStackLayout Spacing="8">
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="CONTRASEÑA" Style="{StaticResource LabelLG}"
+                           TextColor="{StaticResource OnSurfaceVariant}" FontSize="11"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="1"
+                            Text="¿OLVIDASTE TU CLAVE?"
+                            FontFamily="PlusJakartaSans" FontSize="10"
+                            FontAttributes="Bold" CharacterSpacing="1"
+                            TextColor="{StaticResource Primary}"
+                            BackgroundColor="Transparent" Padding="0"
+                            HeightRequest="28" MinimumHeightRequest="28"
+                            HorizontalOptions="End"
+                            Command="{Binding ShowInfoCommand}" />
+                </Grid>
+                <Border Style="{StaticResource InputContainer}">
+                    <Grid ColumnDefinitions="36,*,36">
+                        <Label Text="{x:Static helpers:IconGlyphs.Lock}"
+                               Style="{StaticResource IconGlyph}"
+                               TextColor="{StaticResource Outline}" FontSize="20"
+                               VerticalOptions="Center" HorizontalOptions="Center" />
+                        <Entry Grid.Column="1"
+                               Style="{StaticResource EntryDark}"
+                               Placeholder="••••••••"
+                               IsPassword="{Binding IsPassword}"
+                               Text="{Binding Password}"
+                               ReturnType="Go"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="2"
+                               Text="{Binding VisibilityGlyph}"
+                               Style="{StaticResource IconGlyph}"
+                               TextColor="{StaticResource Outline}" FontSize="20"
+                               VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TogglePasswordCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ===== Mensaje de error ===== -->
+            <Label Text="{Binding ErrorMessage}"
+                   Style="{StaticResource BodySM}"
+                   TextColor="{StaticResource Error}"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource IsNotNullConverter}}" />
+
+            <!-- ===== Botón dorado principal ===== -->
+            <Button Text="INICIAR SESIÓN"
+                    Style="{StaticResource GoldButton}"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}" />
+
+            <!-- ===== Registro ===== -->
+            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                <Label Text="¿No tienes cuenta?" Style="{StaticResource BodyMD}"
+                       TextColor="{StaticResource OnSurfaceVariant}" />
+                <Label Text="Regístrate aquí" Style="{StaticResource TitleMD}"
+                       TextColor="{StaticResource Primary}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowInfoCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+            <!-- ===== Tarjeta exclusiva ===== -->
+            <Border Style="{StaticResource CardLow}" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="64,*,16" ColumnSpacing="12">
+                    <Border WidthRequest="48" HeightRequest="48" HorizontalOptions="Center" VerticalOptions="Center"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                        <Label Text="{x:Static helpers:IconGlyphs.WorkspacePremium}"
+                               Style="{StaticResource IconGlyph}" FontSize="24"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Servicio Exclusivo con Cita"
+                               Style="{StaticResource TitleMD}" LineBreakMode="TailTruncation" />
+                        <Label Text="Maestros barberos y rituales de autor"
+                               Style="{StaticResource BodySM}"
+                               TextColor="{StaticResource Outline}" LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

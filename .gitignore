@@ -1,0 +1,9 @@
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+x64/
+x86/
+.idea/

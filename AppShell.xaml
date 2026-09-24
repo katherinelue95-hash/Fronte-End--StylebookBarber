@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="StyleBookBarberApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:StyleBookBarberApp.Views"
+    xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+    Title="StyleBook Barber"
+    Shell.BackgroundColor="{StaticResource Surface}"
+    Shell.ForegroundColor="{StaticResource OnSurface}"
+    Shell.TitleColor="{StaticResource OnSurface}"
+    Shell.DisabledColor="{StaticResource OutlineVariant}"
+    Shell.UnselectedColor="{StaticResource Outline}"
+    Shell.NavBarHasShadow="False"
+    Shell.TabBarBackgroundColor="{StaticResource SurfaceContainerLowest}"
+    Shell.TabBarForegroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="{StaticResource Primary}"
+    Shell.TabBarUnselectedColor="{StaticResource Outline}">
+
+    <!-- Pantalla inicial: Login (sin barra de navegación) -->
+    <ShellContent
+        Title="Login"
+        Route="LoginPage"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Shell.TabBarIsVisible="False"
+        Shell.NavBarIsVisible="False" />
+
+    <!-- Área principal con barra inferior (diseño Stitch) -->
+    <TabBar Route="MainTab">
+        <ShellContent
+            Title="Inicio"
+            Route="Inicio"
+            ContentTemplate="{DataTemplate views:DashboardPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialSymbolsOutlined" Glyph="&#xE88A;" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="Catálogo"
+            Route="Catalogo"
+            ContentTemplate="{DataTemplate views:ServiciosPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialSymbolsOutlined" Glyph="&#xE65E;" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="Citas"
+            Route="Citas"
+            ContentTemplate="{DataTemplate views:CitasPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialSymbolsOutlined" Glyph="&#xEBCC;" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="Barbero"
+            Route="Barbero"
+            ContentTemplate="{DataTemplate views:BarberosPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialSymbolsOutlined" Glyph="&#xE642;" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </TabBar>
+
+</Shell>

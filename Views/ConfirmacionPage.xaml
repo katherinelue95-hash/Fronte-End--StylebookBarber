@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     ConfirmacionPage — Paso Final (wireframe Stitch: dl2)
+     Resumen de sesión + precio + confirmación con toast.
+     ============================================================ -->
+<ContentPage x:Name="Root"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.ConfirmacionPage"
+             x:DataType="vm:ConfirmacionViewModel"
+             Title="Confirmación">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24" Spacing="20">
+
+                <!-- ===== Header marca ===== -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="StyleBook" FontFamily="BodoniModa" FontSize="20"
+                               FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                StrokeShape="RoundRectangle 6" Padding="8,3">
+                            <Label Text="BARBER" Style="{StaticResource LabelSM}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirNotificacionesCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Notifications}"
+                                   Style="{StaticResource IconGlyph}" FontSize="20"
+                                   TextColor="{StaticResource OnSurfaceVariant}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18"
+                                BackgroundColor="{StaticResource Primary}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirPerfilCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="18"
+                                   TextColor="{StaticResource OnPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- ===== Paso final + título ===== -->
+                <VerticalStackLayout Spacing="4">
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                                 VerticalOptions="Center" />
+                        <Label Text="PASO FINAL" Style="{StaticResource LabelGold}"
+                               TextColor="{StaticResource Primary}" FontSize="10" />
+                    </HorizontalStackLayout>
+                    <Label Text="Confirmación de Cita" Style="{StaticResource HeadlineLGMobile}" />
+                    <Label Text="Revisa el resumen antes de agendar" Style="{StaticResource BodyMD}"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                </VerticalStackLayout>
+
+                <!-- ===== Resumen compacto (Cita Exclusiva) ===== -->
+                <Border BackgroundColor="{StaticResource SurfaceContainerLow}"
+                        StrokeShape="RoundRectangle 12" Padding="12">
+                    <Grid ColumnDefinitions="52,*,Auto" ColumnSpacing="12">
+                        <Border WidthRequest="48" HeightRequest="48"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource SurfaceContainerHighest}">
+                            <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                                   Style="{StaticResource IconGlyph}" FontSize="22"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="{x:Static helpers:IconGlyphs.Verified}"
+                                       Style="{StaticResource IconGlyph}" FontSize="14"
+                                       TextColor="{StaticResource Primary}" />
+                                <Label Text="CITA EXCLUSIVA" Style="{StaticResource LabelGold}"
+                                       TextColor="{StaticResource Primary}" FontSize="9" />
+                            </HorizontalStackLayout>
+                            <Label Text="Experiencia Atelier" Style="{StaticResource TitleMD}"
+                                   FontSize="16" LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceContainer}"
+                                StrokeShape="RoundRectangle 9999" Padding="10,4" VerticalOptions="Center">
+                            <Label Text="ID #8942" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource OnSurfaceVariant}" FontSize="9" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- ===== Detalles de la sesión ===== -->
+                <Border Style="{StaticResource CardLow}" Padding="16">
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="DETALLES DE LA SESIÓN" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Outline}" FontSize="10" />
+                            <Label Grid.Column="1" Text="{x:Static helpers:IconGlyphs.EventNote}"
+                                   Style="{StaticResource IconGlyph}" FontSize="17"
+                                   TextColor="{StaticResource Outline}" />
+                        </Grid>
+
+                        <!-- Servicio -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                            <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                                <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
+                                       Style="{StaticResource IconGlyph}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="SERVICIO" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource Outline}" FontSize="8" />
+                                <Label Text="{Binding Servicio}" Style="{StaticResource TitleMD}" FontSize="15" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Schedule}"
+                                           Style="{StaticResource IconGlyph}" FontSize="13"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding Duracion}" Style="{StaticResource BodySM}" FontSize="11" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Barbero -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                            <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                                <Label Text="{x:Static helpers:IconGlyphs.Badge}"
+                                       Style="{StaticResource IconGlyph}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="BARBERO ASIGNADO" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource Outline}" FontSize="8" />
+                                <Label Text="{Binding Barbero}" Style="{StaticResource TitleMD}" FontSize="15" />
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="{x:Static helpers:IconGlyphs.Stars}"
+                                           Style="{StaticResource IconGlyph}" FontSize="13"
+                                           TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding BarberoRank}" Style="{StaticResource BodySM}" FontSize="11" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Fecha y hora -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                            <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                                <Label Text="{x:Static helpers:IconGlyphs.EventAvailable}"
+                                       Style="{StaticResource IconGlyph}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="FECHA Y HORA" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource Outline}" FontSize="8" />
+                                <Label Text="{Binding Fecha}" Style="{StaticResource TitleMD}" FontSize="15" />
+                                <Label Text="{Binding Hora}" Style="{StaticResource BodyMD}"
+                                       TextColor="{StaticResource Secondary}" FontAttributes="Bold" FontSize="13" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Sede -->
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                            <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                                <Label Text="{x:Static helpers:IconGlyphs.Storefront}"
+                                       Style="{StaticResource IconGlyph}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1">
+                                <Label Text="SEDE &amp; ESPACIO" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource Outline}" FontSize="8" />
+                                <Label Text="Atelier Central" Style="{StaticResource TitleMD}" FontSize="15" />
+                                <Label Text="Silla No. 03 • Planta Baja" Style="{StaticResource BodySM}" FontSize="11" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ===== Precio total con halo ===== -->
+                <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                        StrokeShape="RoundRectangle 16" Padding="20">
+                    <Grid>
+                        <BoxView Color="#14D4AF37" InputTransparent="True"
+                                 WidthRequest="128" HeightRequest="128" CornerRadius="64"
+                                 HorizontalOptions="End" VerticalOptions="End" Margin="0,0,-40,-40" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="PRECIO TOTAL" Style="{StaticResource LabelSM}"
+                                       TextColor="{StaticResource OnSurfaceVariant}" FontSize="9" />
+                                <Label Text="Tarifa cerrada sin cargos extras" Style="{StaticResource BodySM}"
+                                       TextColor="{StaticResource Outline}" FontSize="10" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding Precio}"
+                                   FontFamily="BodoniModa" FontSize="30" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- ===== Botón confirmar + nota de confianza ===== -->
+                <Button Text="Confirmar Cita"
+                        Style="{StaticResource GoldButton}"
+                        Command="{Binding ConfirmarCommand}"
+                        IsEnabled="{Binding Confirmando, Converter={StaticResource InverseBoolConverter}}" />
+
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="{x:Static helpers:IconGlyphs.VerifiedUser}"
+                           Style="{StaticResource IconGlyph}" FontSize="15"
+                           TextColor="{StaticResource Primary}" />
+                    <Label Text="Reserva directa • Cancelación flexible hasta 2h antes"
+                           Style="{StaticResource BodySM}" FontSize="11"
+                           HorizontalTextAlignment="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== Toast de éxito ===== -->
+        <Border Grid.Row="1" BackgroundColor="{StaticResource SurfaceContainerHighest}"
+                StrokeShape="RoundRectangle 14" Padding="18,12"
+                Margin="0,0,0,16" HorizontalOptions="Center"
+                IsVisible="{Binding Confirmado}">
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="{x:Static helpers:IconGlyphs.TaskAlt}"
+                       Style="{StaticResource IconGlyph}" FontSize="20"
+                       TextColor="{StaticResource Primary}" />
+                <Label Text="¡Cita registrada con éxito!" Style="{StaticResource BodyMD}"
+                       FontAttributes="Bold" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

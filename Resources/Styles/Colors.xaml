@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ============================================================
+     StyleBook Barber — Atelier Noir (negro y dorado premium)
+     Sistema de diseño: DESIGN.md (Google Stitch)
+     ============================================================ -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 1. Superficies (matte noir) -->
+    <Color x:Key="Surface">#131313</Color>
+    <Color x:Key="SurfaceDim">#131313</Color>
+    <Color x:Key="SurfaceBright">#393939</Color>
+    <Color x:Key="SurfaceContainerLowest">#0E0E0E</Color>
+    <Color x:Key="SurfaceContainerLow">#1C1B1B</Color>
+    <Color x:Key="SurfaceContainer">#201F1F</Color>
+    <Color x:Key="SurfaceContainerHigh">#2A2A2A</Color>
+    <Color x:Key="SurfaceContainerHighest">#353534</Color>
+    <Color x:Key="SurfaceVariant">#353534</Color>
+
+    <!-- 2. Texto -->
+    <Color x:Key="OnSurface">#E5E2E1</Color>
+    <Color x:Key="OnSurfaceVariant">#D0C5AF</Color>
+    <Color x:Key="TextPrimary">#FFFFFF</Color>
+    <Color x:Key="TextSecondary">#A0A0A0</Color>
+    <Color x:Key="Outline">#99907C</Color>
+    <Color x:Key="OutlineVariant">#4D4635</Color>
+
+    <!-- 3. Dorados (signaturas Metálicas) -->
+    <!-- Dorado firma / metálico -->
+    <Color x:Key="Primary">#D4AF37</Color>
+    <!-- Dorado claro (champagne) -->
+    <Color x:Key="PrimaryLight">#F5D77F</Color>
+    <!-- Dorado intenso para highlights -->
+    <Color x:Key="PrimaryBright">#F2CA50</Color>
+    <Color x:Key="OnPrimary">#121212</Color>
+    <Color x:Key="PrimaryContainer">#D4AF37</Color>
+    <Color x:Key="OnPrimaryContainer">#554300</Color>
+    <!-- Bronce (endpoints de gradiente / presionado) -->
+    <Color x:Key="PrimaryDark">#AA7C11</Color>
+
+    <Color x:Key="Secondary">#E1C46E</Color>
+    <Color x:Key="OnSecondary">#3C2F00</Color>
+    <Color x:Key="SecondaryContainer">#655000</Color>
+    <Color x:Key="OnSecondaryContainer">#E1C46E</Color>
+
+    <Color x:Key="Tertiary">#FDC659</Color>
+    <Color x:Key="OnTertiary">#412D00</Color>
+    <Color x:Key="TertiaryContainer">#DEAA41</Color>
+    <Color x:Key="OnTertiaryContainer">#5B4000</Color>
+
+    <!-- 4. Errores / estados -->
+    <Color x:Key="Error">#FFB4AB</Color>
+    <Color x:Key="OnError">#690005</Color>
+    <Color x:Key="ErrorContainer">#93000A</Color>
+    <Color x:Key="OnErrorContainer">#FFDAD6</Color>
+
+    <!-- 5. Líneas/marcos dorados translúcidos -->
+    <Color x:Key="GoldStrokeStrong">#66D4AF37</Color>   <!-- rgba(212,175,55,0.40) -->
+    <Color x:Key="GoldStroke">#2ED4AF37</Color>          <!-- rgba(212,175,55,0.18) -->
+    <Color x:Key="GoldStrokeSoft">#1FD4AF37</Color>      <!-- rgba(212,175,55,0.12) -->
+    <Color x:Key="GoldStrokeChampagne">#38F5D77F</Color> <!-- rgba(245,215,127,0.22) -->
+    <Color x:Key="GlassElevation">#D9131313</Color>      <!-- rgba(18,18,18,0.85) -->
+    <Color x:Key="GlassTile">#A61E1E1E</Color>           <!-- rgba(30,30,30,0.65) -->
+    <Color x:Key="GlassLight">#0AFFFFFF</Color>          <!-- rgba(255,255,255,0.04) -->
+    <Color x:Key="StrokeLight">#1AFFFFFF</Color>         <!-- rgba(255,255,255,0.10) -->
+
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="OffBlack">#121212</Color>
+
+    <!-- 6. Brushes -->
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
+    <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimary}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
+    <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource Outline}" />
+
+    <!-- Gradiente dorado Metálico: #F5D77F → #D4AF37 → #AA7C11 -->
+    <LinearGradientBrush x:Key="GoldGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#F5D77F" Offset="0.0" />
+        <GradientStop Color="#D4AF37" Offset="0.5" />
+        <GradientStop Color="#AA7C11" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Gradiente dorado suave para avatares -->
+    <LinearGradientBrush x:Key="GoldAmbient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#1ED4AF37" Offset="0.0" />
+        <GradientStop Color="#0D4D2E00" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Velo sutil sobre fotografías del catálogo -->
+    <Color x:Key="ImageShade">#260E0E0E</Color>
+    <LinearGradientBrush x:Key="ImageShadeBottom" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#000E0E0E" Offset="0.0" />
+        <GradientStop Color="#C80E0E0E" Offset="1.0" />
+    </LinearGradientBrush>
+</ResourceDictionary>

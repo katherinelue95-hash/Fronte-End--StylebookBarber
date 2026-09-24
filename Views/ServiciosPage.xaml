@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ============================================================
+     ServiciosPage — Catálogo de Servicios (wireframe Stitch: Desktop)
+     ============================================================ -->
+<ContentPage x:Name="Root"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StyleBookBarberApp.ViewModels"
+             xmlns:m="clr-namespace:StyleBookBarberApp.Models"
+             xmlns:helpers="clr-namespace:StyleBookBarberApp.Helpers"
+             x:Class="StyleBookBarberApp.Views.ServiciosPage"
+             x:DataType="vm:ServiciosViewModel"
+             Title="Catálogo"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24" Spacing="16">
+
+                <!-- ===== Header marca ===== -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="StyleBook" FontFamily="BodoniModa" FontSize="20"
+                               FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                                StrokeShape="RoundRectangle 6" Padding="8,3">
+                            <Label Text="BARBER" Style="{StaticResource LabelSM}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Center">
+                        <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{StaticResource SurfaceContainerHigh}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirNotificacionesCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Notifications}"
+                                   Style="{StaticResource IconGlyph}" FontSize="20"
+                                   TextColor="{StaticResource OnSurfaceVariant}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18"
+                                BackgroundColor="{StaticResource Primary}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirPerfilCommand}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{x:Static helpers:IconGlyphs.Person}"
+                                   Style="{StaticResource IconGlyph}" FontSize="18"
+                                   TextColor="{StaticResource OnPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- ===== Intro: Santuario Masculino + título ===== -->
+                <VerticalStackLayout Spacing="6">
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView Style="{StaticResource StatusDot}" WidthRequest="8" HeightRequest="8"
+                                 VerticalOptions="Center" />
+                        <Label Text="SANTUARIO MASCULINO" Style="{StaticResource LabelGold}"
+                               TextColor="{StaticResource Primary}" FontSize="10" />
+                    </HorizontalStackLayout>
+                    <Label Text="Catálogo de Servicios" Style="{StaticResource HeadlineLGMobile}" />
+                    <Label Text="Explora cortes de precisión, rituales de barba y tratamientos exclusivos."
+                           Style="{StaticResource BodyMD}" TextColor="{StaticResource OnSurfaceVariant}" />
+                </VerticalStackLayout>
+
+                <!-- ===== Buscador de servicios ===== -->
+                <Border BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                        StrokeShape="RoundRectangle 12" Padding="2">
+                    <Grid ColumnDefinitions="40,*">
+                        <Label Text="{x:Static helpers:IconGlyphs.Search}"
+                               Style="{StaticResource IconGlyph}" FontSize="18"
+                               TextColor="{StaticResource Primary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Placeholder="Buscar servicio, categoría o ritual..."
+                               PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                               Text="{Binding Busqueda}"
+                               TextColor="{StaticResource OnSurface}"
+                               BackgroundColor="Transparent"
+                               FontFamily="PlusJakartaSans" FontSize="13"
+                               HeightRequest="40" VerticalOptions="Center"
+                               ClearButtonVisibility="WhileEditing" />
+                    </Grid>
+                </Border>
+
+                <!-- ===== Filtros + chips de categoría ===== -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{x:Static helpers:IconGlyphs.Tune}"
+                               Style="{StaticResource IconGlyph}" FontSize="15"
+                               TextColor="{StaticResource Primary}" />
+                        <Label Text="CATEGORÍAS DE COLECCIÓN" Style="{StaticResource LabelSM}"
+                               TextColor="{StaticResource OnSurfaceVariant}" FontSize="10"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceContainerHigh}"
+                            Stroke="{StaticResource OutlineVariant}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 9999" Padding="10,4">
+                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                            <BoxView Style="{StaticResource StatusDot}" WidthRequest="6" HeightRequest="6"
+                                     VerticalOptions="Center" />
+                            <Label Text="3 ACTIVAS" Style="{StaticResource LabelSM}"
+                                   TextColor="{StaticResource Primary}" FontSize="9" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8"
+                                           BindableLayout.ItemsSource="{Binding Categorias}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="m:FiltroCategoria">
+                                <Border BackgroundColor="{Binding Fondo}"
+                                        StrokeShape="RoundRectangle 9999" Padding="14,9">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding BindingContext.FiltrarCommand, Source={x:Reference Root}}"
+                                            CommandParameter="{Binding Nombre}" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label Text="{Binding Icono}"
+                                               Style="{StaticResource IconGlyph}"
+                                               TextColor="{Binding TextoColor}" FontSize="15"
+                                               IsVisible="{Binding Icono, Converter={StaticResource IsNotEmptyConverter}}" />
+                                        <Label Text="{Binding Nombre}" Style="{StaticResource LabelLG}"
+                                               TextColor="{Binding TextoColor}"
+                                               FontSize="11" CharacterSpacing="1" />
+                                        <Label Text="{Binding Count}"
+                                               BackgroundColor="{Binding ContadorFondo}"
+                                               TextColor="{Binding ContadorTextoColor}"
+                                               FontFamily="PlusJakartaSans" FontSize="10" FontAttributes="Bold"
+                                               Padding="6,2" HorizontalTextAlignment="Center"
+                                               IsVisible="{Binding Count, Converter={StaticResource IsNotZeroConverter}}" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- ===== Tarjetas de servicio ===== -->
+                <VerticalStackLayout Spacing="16"
+                                     BindableLayout.ItemsSource="{Binding Visibles}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:ServicioItem">
+                            <Border Style="{StaticResource CardLow}" Padding="14">
+                                <VerticalStackLayout Spacing="12">
+                                    <!-- Imagen del servicio + overlays -->
+                                    <Grid HeightRequest="150">
+                                        <Border StrokeShape="RoundRectangle 14"
+                                                Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="0.5"
+                                                BackgroundColor="{StaticResource SurfaceContainerLowest}">
+                                            <Grid BackgroundColor="{StaticResource SurfaceContainerLowest}" Padding="8">
+                                                <Image Source="{Binding Imagen}" Aspect="AspectFit"
+                                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                                                <!-- velo degradado para legibilidad -->
+                                                <BoxView Background="{StaticResource ImageShade}"
+                                                         InputTransparent="True" />
+                                                <Border VerticalOptions="End" Margin="0"
+                                                        Background="{StaticResource ImageShadeBottom}"
+                                                        StrokeThickness="0">
+                                                    <Label Text="{Binding Titulo}" Style="{StaticResource HeadlineSM}"
+                                                           FontSize="17" Margin="12,10"
+                                                           LineBreakMode="TailTruncation"
+                                                           TextColor="{StaticResource OnSurface}" />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                        <!-- Rating -->
+                                        <Border BackgroundColor="#D90E0E0E" Padding="8,3"
+                                                StrokeShape="RoundRectangle 9999"
+                                                HorizontalOptions="End" VerticalOptions="Start"
+                                                Margin="0,10,10,0">
+                                            <HorizontalStackLayout Spacing="3">
+                                                <Label Text="{x:Static helpers:IconGlyphs.Star}"
+                                                       Style="{StaticResource IconGlyph}" FontSize="13"
+                                                       TextColor="{StaticResource Primary}" />
+                                                <Label Text="{Binding Rating}" Style="{StaticResource LabelSM}"
+                                                       TextColor="{StaticResource Primary}" FontSize="9" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                        <!-- VIP -->
+                                        <Border BackgroundColor="{StaticResource Primary}" Padding="12,5"
+                                                StrokeShape="RoundRectangle 8"
+                                                HorizontalOptions="Start" VerticalOptions="Start"
+                                                Margin="10,10,0,0"
+                                                IsVisible="{Binding EsVip}">
+                                            <Label Text="EXPERIENCIA VIP" Style="{StaticResource LabelSM}"
+                                                   TextColor="{StaticResource OnPrimary}" FontSize="9" />
+                                        </Border>
+                                        <!-- TENDENCIA -->
+                                        <HorizontalStackLayout Spacing="4"
+                                                               HorizontalOptions="Start" VerticalOptions="Start"
+                                                               Margin="10,10,0,0"
+                                                               IsVisible="{Binding EsTendencia}">
+                                            <Label Text="{x:Static helpers:IconGlyphs.LocalFire}"
+                                                   Style="{StaticResource IconGlyph}" FontSize="16"
+                                                   TextColor="{StaticResource Primary}" />
+                                            <Label Text="TENDENCIA" Style="{StaticResource LabelSM}"
+                                                   TextColor="{StaticResource Primary}" FontSize="9"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <!-- RITUAL SPA -->
+                                        <HorizontalStackLayout Spacing="4"
+                                                               HorizontalOptions="Start" VerticalOptions="Start"
+                                                               Margin="10,10,0,0"
+                                                               IsVisible="{Binding EsRitual}">
+                                            <Label Text="{x:Static helpers:IconGlyphs.Spa}"
+                                                   Style="{StaticResource IconGlyph}" FontSize="16"
+                                                   TextColor="{StaticResource Primary}" />
+                                            <Label Text="RITUAL SPA" Style="{StaticResource LabelSM}"
+                                                   TextColor="{StaticResource Primary}" FontSize="9"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <!-- Duración -->
+                                        <Border BackgroundColor="#D90E0E0E" Padding="8,3"
+                                                StrokeShape="RoundRectangle 9999"
+                                                HorizontalOptions="Start" VerticalOptions="End"
+                                                Margin="10,0,0,10">
+                                            <HorizontalStackLayout Spacing="4">
+                                                <Label Text="{x:Static helpers:IconGlyphs.Schedule}"
+                                                       Style="{StaticResource IconGlyph}" FontSize="13"
+                                                       TextColor="{StaticResource Primary}" />
+                                                <Label Text="{Binding Duracion}" Style="{StaticResource LabelSM}"
+                                                       TextColor="{StaticResource OnSurface}" FontSize="9" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Titulo + precio + descripción -->
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Titulo}" Style="{StaticResource HeadlineSM}"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Grid.Column="1" Text="{Binding Precio}"
+                                               FontFamily="PlusJakartaSans" FontSize="16" FontAttributes="Bold"
+                                               TextColor="{StaticResource Primary}"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+                                    <Label Text="{Binding Descripcion}" Style="{StaticResource BodySM}"
+                                           TextColor="{StaticResource OnSurfaceVariant}"
+                                           MaxLines="2" LineBreakMode="TailTruncation" />
+
+                                    <!-- Botón selección -->
+                                    <Button Text="{Binding BotonTexto}"
+                                            Background="{StaticResource GoldGradient}"
+                                            TextColor="{StaticResource OnPrimary}"
+                                            FontFamily="PlusJakartaSans" FontSize="12" FontAttributes="Bold"
+                                            CharacterSpacing="1.2" CornerRadius="12" HeightRequest="48"
+                                            Command="{Binding BindingContext.SeleccionarCommand, Source={x:Reference Root}}"
+                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== Banner "Continuar" (servicio elegido) ===== -->
+        <Border Grid.Row="1"
+                BackgroundColor="#F22A2A2A"
+                Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="1"
+                StrokeShape="RoundRectangle 14" Padding="14,12"
+                Margin="20,0,20,12"
+                IsVisible="{Binding HaySeleccion}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                        BackgroundColor="#26D4AF37">
+                    <Label Text="{x:Static helpers:IconGlyphs.DoneAll}"
+                           Style="{StaticResource IconGlyph}" FontSize="20"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                    <Label Text="{Binding ElegidoTitulo}" FontFamily="PlusJakartaSans" FontSize="13"
+                           FontAttributes="Bold" TextColor="{StaticResource OnSurface}"
+                           LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding ElegidoPrecio}" Style="{StaticResource BodySM}"
+                           TextColor="{StaticResource Primary}" FontAttributes="Bold" FontSize="11" />
+                </VerticalStackLayout>
+                <Border Grid.Column="2" Background="{StaticResource GoldGradient}"
+                        StrokeShape="RoundRectangle 10" Padding="18,10" VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ContinuarCommand}" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="4">
+                        <Label Text="CONTINUAR" Style="{StaticResource LabelLG}"
+                               TextColor="{StaticResource OnPrimary}" FontSize="11" />
+                        <Label Text="{x:Static helpers:IconGlyphs.ArrowForward}"
+                               Style="{StaticResource IconGlyph}" FontSize="16"
+                               TextColor="{StaticResource OnPrimary}" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
