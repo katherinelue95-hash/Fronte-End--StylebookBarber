@@ -10,6 +10,17 @@ public class UsuariosServices
 
     public UsuariosServices(HttpClient http) => _http = http;
 
+    public async Task<Usuario?> LoginAsync(string correo, string password)
+    {
+        var response = await _http.PostAsJsonAsync("/api/auth/login", new { correo, passwordHash = password });
+
+        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            return null;
+
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<Usuario>();
+    }
+
     public async Task<List<Usuario>> GetUsuariosAsync()
         => await _http.GetFromJsonAsync<List<Usuario>>("/api/usuarios") ?? new List<Usuario>();
 

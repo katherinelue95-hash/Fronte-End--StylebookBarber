@@ -5,5 +5,5 @@ namespace StyleBookBarberApp.Helpers;
 /// </summary>
 public static class ApiConstants
 {
-    public static string BaseUrl => "https://stylebookbarber-api.runasp.net";
+    public static string BaseUrl => "http://stylebookbarber-api.runasp.net";
 }

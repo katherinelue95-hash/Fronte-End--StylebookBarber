@@ -107,10 +107,7 @@ public partial class LoginViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            var usuarios = await _usuariosServices.GetUsuariosAsync();
-            var usuario = usuarios.FirstOrDefault(u =>
-                string.Equals(u.Correo, Email.Trim(), StringComparison.OrdinalIgnoreCase) &&
-                u.PasswordHash == Password);
+            var usuario = await _usuariosServices.LoginAsync(Email.Trim(), Password);
 
             if (usuario is null)
             {
