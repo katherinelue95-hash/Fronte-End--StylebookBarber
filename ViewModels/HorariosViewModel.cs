@@ -52,8 +52,8 @@ public partial class HorariosViewModel : BaseViewModel
     /// <summary>Estrellas interactivas del selector de puntuación (tap para votar).</summary>
     public ObservableCollection<Estrella> EstrellasPuntaje { get; } = new();
 
-    private int _anio = 2024;
-    private int _mes = 10;
+    private int _anio = DateTime.Now.Year;
+    private int _mes = DateTime.Now.Month;
     private DiaMes? _diaActivo;
     private HorarioSlot? _horaElegida;
 
