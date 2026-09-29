@@ -16,19 +16,14 @@
     <ScrollView>
         <VerticalStackLayout Padding="20,24,20,40" Spacing="20">
 
-            <!-- ===== Isotipo + Marca (glow ambiental) ===== -->
-            <VerticalStackLayout Spacing="10" Margin="0,8,0,4">
-                <Border WidthRequest="64" HeightRequest="64"
-                        StrokeShape="RoundRectangle 32"
-                        BackgroundColor="{StaticResource SurfaceContainerHigh}"
-                        Stroke="{StaticResource GoldStrokeStrong}" StrokeThickness="1"
-                        HorizontalOptions="Center">
-                    <Label Text="{x:Static helpers:IconGlyphs.Scissors}"
-                           Style="{StaticResource IconGlyph}"
-                           FontSize="30"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-                <Label Text="STYLEBOOK BARBER"
+            <!-- ===== Logo oficial + Marca ===== -->
+            <VerticalStackLayout Spacing="12" Margin="0,8,0,4">
+                <Image Source="logo.png"
+                       Aspect="AspectFit"
+                       WidthRequest="{OnIdiom Phone=170, Tablet=260}"
+                       HorizontalOptions="Center"
+                       SemanticProperties.Description="Logo de StyleBook Barber" />
+                <Label Text="StyleBook Barber"
                        Style="{StaticResource LabelGold}"
                        FontSize="18" CharacterSpacing="2.5"
                        HorizontalTextAlignment="Center" />
