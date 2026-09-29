@@ -10,6 +10,7 @@
              x:Class="StyleBookBarberApp.Views.LoginPage"
              x:DataType="vm:LoginViewModel"
              Title="Iniciar Sesión"
+             BackgroundColor="{StaticResource Surface}"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">
 

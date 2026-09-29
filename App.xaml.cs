@@ -7,6 +7,7 @@ namespace StyleBookBarberApp
         public App(IServiceProvider services)
         {
             InitializeComponent();
+            UserAppTheme = AppTheme.Dark;
             ServiceHelper.Initialize(services);
         }
 
