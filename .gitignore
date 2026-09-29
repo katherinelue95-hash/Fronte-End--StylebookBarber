@@ -7,3 +7,8 @@ obj/
 x64/
 x86/
 .idea/
+# Credenciales de firma (no subir al repo publico)
+Properties/PublishProfiles/*.pubxml
+*.keystore
+*.jks
+
