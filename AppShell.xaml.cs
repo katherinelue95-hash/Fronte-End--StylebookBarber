@@ -13,6 +13,7 @@ namespace StyleBookBarberApp
             Routing.RegisterRoute("Perfil", typeof(PerfilPage));
             Routing.RegisterRoute("Notificaciones", typeof(NotificacionesPage));
             Routing.RegisterRoute("Admin", typeof(AdminPage));
+            Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
         }
     }
 }

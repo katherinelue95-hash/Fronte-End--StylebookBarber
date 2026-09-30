@@ -39,6 +39,7 @@ namespace StyleBookBarberApp
 
             // ViewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<RegisterViewModel>();
             builder.Services.AddTransient<DashboardViewModel>();
             builder.Services.AddTransient<ServiciosViewModel>();
             builder.Services.AddTransient<HorariosViewModel>();

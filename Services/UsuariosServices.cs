@@ -21,6 +21,23 @@ public class UsuariosServices
         return await response.Content.ReadFromJsonAsync<Usuario>();
     }
 
+    /// <summary>Registra un cliente nuevo. El backend asigna el rol Cliente (RolId = 1) automáticamente.</summary>
+    public async Task<Usuario?> RegisterAsync(string nombre, string apellido, string correo, string password)
+    {
+        var response = await _http.PostAsJsonAsync("/api/usuarios", new
+        {
+            nombre,
+            apellido,
+            correo,
+            passwordHash = password
+        });
+
+        if (!response.IsSuccessStatusCode)
+            return null;
+
+        return await response.Content.ReadFromJsonAsync<Usuario>();
+    }
+
     public async Task<List<Usuario>> GetUsuariosAsync()
         => await _http.GetFromJsonAsync<List<Usuario>>("/api/usuarios") ?? new List<Usuario>();
 

@@ -7,9 +7,12 @@ namespace StyleBookBarberApp.ViewModels;
 
 /// <summary>
 /// ViewModel de Iniciar Sesión (fiel al wireframe Stitch zip7).
+/// Solo clientes: los roles Barbero/Admin/Administrativo no se exponen en la interfaz pública.
 /// </summary>
 public partial class LoginViewModel : BaseViewModel
 {
+    private const int RolCliente = 1;
+
     private readonly UsuariosServices _usuariosServices;
 
     public LoginViewModel(UsuariosServices usuariosServices)
@@ -28,59 +31,7 @@ public partial class LoginViewModel : BaseViewModel
     private bool isPassword = true;
 
     [ObservableProperty]
-    private string selectedRole = "Cliente";
-
-    [ObservableProperty]
     private string? errorMessage;
-
-    // ===== Estado visual del segmentado Cliente / Barbero / Administrativo =====
-    public Color ClienteBgColor => SelectedRole == "Cliente" ? ResourceColor("SurfaceContainerHigh") : Colors.Transparent;
-    public Color ClienteTextColor => SelectedRole == "Cliente" ? ResourceColor("PrimaryBright") : ResourceColor("OnSurfaceVariant");
-    public Color BarberoBgColor => SelectedRole == "Barbero" ? ResourceColor("SurfaceContainerHigh") : Colors.Transparent;
-    public Color BarberoTextColor => SelectedRole == "Barbero" ? ResourceColor("PrimaryBright") : ResourceColor("OnSurfaceVariant");
-    public Color AdminBgColor => SelectedRole == "Administrativo" ? ResourceColor("SurfaceContainerHigh") : Colors.Transparent;
-    public Color AdminTextColor => SelectedRole == "Administrativo" ? ResourceColor("PrimaryBright") : ResourceColor("OnSurfaceVariant");
-
-    partial void OnSelectedRoleChanged(string value)
-    {
-        OnPropertyChanged(nameof(ClienteBgColor));
-        OnPropertyChanged(nameof(ClienteTextColor));
-        OnPropertyChanged(nameof(BarberoBgColor));
-        OnPropertyChanged(nameof(BarberoTextColor));
-        OnPropertyChanged(nameof(AdminBgColor));
-        OnPropertyChanged(nameof(AdminTextColor));
-    }
-
-    [RelayCommand]
-    private void SelectCliente()
-    {
-        SelectedRole = "Cliente";
-        NotificarSegmentos();
-    }
-
-    [RelayCommand]
-    private void SelectBarbero()
-    {
-        SelectedRole = "Barbero";
-        NotificarSegmentos();
-    }
-
-    [RelayCommand]
-    private void SelectAdmin()
-    {
-        SelectedRole = "Administrativo";
-        NotificarSegmentos();
-    }
-
-    private void NotificarSegmentos()
-    {
-        OnPropertyChanged(nameof(ClienteBgColor));
-        OnPropertyChanged(nameof(ClienteTextColor));
-        OnPropertyChanged(nameof(BarberoBgColor));
-        OnPropertyChanged(nameof(BarberoTextColor));
-        OnPropertyChanged(nameof(AdminBgColor));
-        OnPropertyChanged(nameof(AdminTextColor));
-    }
 
     public string VisibilityGlyph => IsPassword ? "\uE8F4" : "\uE8F5"; // visibility / visibility_off
 
@@ -115,21 +66,19 @@ public partial class LoginViewModel : BaseViewModel
                 return;
             }
 
+            if (usuario.RolId != RolCliente)
+            {
+                ErrorMessage = "El acceso está disponible solo para clientes.";
+                return;
+            }
+
             // Sesión local
             Preferences.Default.Set("UserId", usuario.UsuariosId);
             Preferences.Default.Set("UserNombre", $"{usuario.Nombre} {usuario.Apellido}".Trim());
             Preferences.Default.Set("UserCorreo", usuario.Correo);
-            Preferences.Default.Set("UserRole", SelectedRole);
+            Preferences.Default.Set("UserRole", "Cliente");
 
-            if (SelectedRole == "Administrativo")
-            {
-                await Shell.Current.GoToAsync("//MainTab");
-                await Shell.Current.GoToAsync("Admin");
-            }
-            else
-            {
-                await Shell.Current.GoToAsync("//MainTab");
-            }
+            await Shell.Current.GoToAsync("//MainTab");
         }
         catch (Exception)
         {
@@ -142,6 +91,10 @@ public partial class LoginViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task IrARegistroAsync()
+        => await Shell.Current.GoToAsync("RegisterPage");
+
+    [RelayCommand]
     private void ShowInfo()
-        => ErrorMessage = "La recuperación de contraseña y el registro se habilitarán próximamente.";
+        => ErrorMessage = "La recuperación de contraseña se habilitará próximamente.";
 }
